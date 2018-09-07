@@ -1,0 +1,165 @@
+\documentclass[bibliography=totoc, abstract=on]{scrartcl}
+
+\usepackage{fancyhdr}
+\fancyhead{}
+\fancyfoot{}
+\fancyhead[RO,RE]{\slshape \leftmark}
+\fancyhead[LO,LE]{\slshape \rightmark}
+\fancyfoot[C]{\thepage}
+
+\setlength{\columnsep}{25pt}
+\setlength{\columnseprule}{0.4pt}
+
+\renewcommand{\contentsname}{Table of Contents}
+
+\usepackage[format=plain, labelfont=bf, textfont=it, margin=1cm]{caption}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{pdfpages}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage[section=section]{glossaries}
+\usepackage{tikz}
+\usepackage{icomma}
+\usepackage{pgfplots, pgfplotstable}
+\usepackage{bchart}
+\usepackage{mathtools}
+\usepackage{csquotes}
+\usepackage{chngcntr}
+\usepackage{multirow}
+\usepackage{soul}
+
+\usepackage[backend=biber,style=ieee,sortlocale=en_UK,natbib=true,url=true,doi=true,eprint=true,autocite=superscript]{biblatex}
+
+\usetikzlibrary{automata,positioning,patterns}
+\pgfplotsset{width=12cm,compat=1.9}
+
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+\DeclareOldFontCommand{\sl}{\normalfont}{\mathbf}
+\DeclareOldFontCommand{\rm}{\normalfont}{\mathbf}
+
+\usepackage{titlesec}
+
+\addbibresource{appendix/references.bib}
+\let\cite\supercite
+
+\makeglossaries
+\input{appendix/glossary.tex}
+
+\begin{document}
+
+%\begin{titlepage}
+%\input{frontpage/frontpage.tex}
+%\end{titlepage}
+
+\pagenumbering{gobble}
+\vspace*{\fill}
+\begin{center}
+(This page is intentionally left blank)
+\end{center}
+\vfill
+
+\pagebreak
+
+\pagenumbering{roman}
+
+\input{abstract/abstract.tex}
+
+\pagebreak
+
+\listoffigures
+
+\pagebreak
+
+\listoftables
+
+\pagebreak
+
+\setglossarypreamble[main]{\noindent\makebox[\linewidth]{\rule[.55\baselineskip]{\textwidth}{0.1pt}} 
+This glossary contains short explanations of blockchain-related terms, which are important in context of this thesis. First occurrences of the important terms are highlighted with the \textit{emphasized} text in the report to get the reader's attention. Readers, which are not familiar with blockchain-related terminology and general concepts, are strongly advised to get acquainted with those terms and browse through the contents of Appendix \ref{section:ether} before reading the thesis.
+
+\noindent\makebox[\linewidth]{\rule[-.1\baselineskip]{\textwidth}{0.1pt}}
+}
+
+\printglossary[title=Glossary of Blockchain-Related Terms, type=main,nonumberlist]
+
+\pagebreak
+
+\tableofcontents
+
+\pagebreak
+
+\pagenumbering{arabic}
+\counterwithin{figure}{section}
+\counterwithin{table}{section}
+\counterwithin{equation}{section}
+
+\pagestyle{fancy}
+\renewcommand{\subsectionmark}[1]{\markright{#1}}
+
+\newcommand{\sectionfont}{\sffamily\Large\bfseries\filcenter}
+
+\titleformat{\section}{\titlerule\vspace{1ex}\sectionfont}{\thesection}{1em}{\sectionfont}[\titlerule]
+
+\thispagestyle{plain}
+\section{Introduction}
+\input{introduction/background.tex}
+\input{introduction/goalsoftheproject.tex}
+\input{introduction/centralizationperspective.tex}
+\input{introduction/blocketsecurepackage.tex}
+\input{introduction/implementationapproaches.tex}
+%\input{introduction/designstrategy.tex}
+
+\pagebreak
+\thispagestyle{plain}
+\section{Theoretical analysis} \label{section:theoanalysis}
+\input{theoreticalanalysis/purposeoftheanalysis.tex}
+\input{theoreticalanalysis/originalsystem.tex}
+\input{theoreticalanalysis/featureanalysis.tex}
+\input{theoreticalanalysis/conclusion.tex}
+
+\pagebreak
+\thispagestyle{plain}
+\section{Design and implementation} \label{section:design}
+\input{design/features.tex}
+\input{design/architecture.tex}
+\input{design/simulation.tex}
+\input{design/workflow.tex}
+
+\pagebreak
+\thispagestyle{plain}
+\section{Centralized application}
+\input{application/overview.tex}
+\input{application/usecases.tex}
+
+\pagebreak
+\thispagestyle{plain}
+\section{Discussion}
+\input{discussion/tooriginal.tex}
+\input{discussion/toblockchain.tex}
+
+\pagebreak
+\thispagestyle{plain}
+\section{Conclusion}
+\input{conclusion/conclusion.tex}
+
+\pagebreak
+\thispagestyle{plain}
+\section{Future work} \label{section:futurework}
+\input{futurework/futurework.tex}
+
+\pagebreak
+
+\titleformat{\section}{\sffamily\Large\bfseries}{\thesection}{1em}{\sffamily\Large\bfseries}[]
+
+\fancyhead[RO,RE]{\uppercase{\slshape \leftmark}}
+\fancyhead[LO,LE]{\uppercase{\slshape APPENDIX}}
+
+\input{appendix/appendix.tex}
+
+\pagebreak
+\printbibliography[heading=bibintoc]
+
+\end{document}

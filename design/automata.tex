@@ -1,0 +1,41 @@
+\begin{tikzpicture}[node distance=4cm,on grid,auto,initial text=, bend angle=25] 
+   \node[state,initial,minimum size=5em] 		(CREATED)   							{{\tiny CREATED}}; 
+   \node[state,minimum size=5em] 				(LOCKED)	[above right=of CREATED] 	{\tiny LOCKED};
+   \node[state,accepting,minimum size=5em] 		(INACTIVE)	[below right=of CREATED] 	{\tiny INACTIVE};
+   \node[state,minimum size=5em] 				(TRANSIT)	[below right=of LOCKED] 	{\tiny TRANSIT};
+   \node[state,minimum size=5em] 				(TRANSITV)	[above right=of TRANSIT] 	{\tiny TRANSIT$_\mathrm{V}$};
+   \node[state,minimum size=5em] 				(DELIV)		[below right=of TRANSIT] 	{\tiny DELIV};
+   \node[state,minimum size=5em] 				(DELIVV)	[below right=of TRANSITV] 	{\tiny DELIV$_\mathrm{V}$};
+   \node[state,accepting,minimum size=5em] 		(COMPLETED)	[below right=of INACTIVE] 	{\tiny COMPLETED};
+   \node[state,minimum size=5em] 				(RETURNV)	[below right=of DELIV]	 	{\tiny RETURN$_\mathrm{V}$};
+   \node[state,minimum size=5em] 				(RETURN)	[below right=of COMPLETED]	{\tiny RETURN};
+   \node[state,minimum size=5em] 				(RETURNED)	[below left=of COMPLETED]	{\tiny RETURNED};
+   \node[state,minimum size=5em] 				(RETURNEDV)	[below right=of RETURNED]	{\tiny RETURNED$_\mathrm{V}$};
+   \node[state,minimum size=5em] 				(CLERKV)	[below left=of RETURNED]	{\tiny CLERK$_\mathrm{V}$};
+   \node[state,minimum size=5em] 				(CLERK)		[below left=of INACTIVE]	{\tiny CLERK};
+   
+    \path[->] 
+    (CREATED) 	edge [loop below] 		node[align=center,xshift=-11mm,yshift=12mm]					{$e_{\mathrm{prop}}$ \\ $e_{\mathrm{b\_abort}}$ \\ $ e_{\mathrm{decline}}$} 	()
+    (CREATED) 	edge [bend left] 		node[align=center]											{$e_{\mathrm{accept}}$} 										(LOCKED)
+    (CREATED) 	edge [bend right] 		node[align=center]											{$e_{\mathrm{s\_abort}}$} 									(INACTIVE)
+    (LOCKED) 	edge			 		node[align=center]											{$e_{\mathrm{b\_abort}}$ \\ $e_{\mathrm{s\_abort}}$} 					(INACTIVE)
+    (LOCKED) 	edge [bend left] 		node[align=center]											{$e_{\mathrm{s\_post}}$} 									(TRANSIT)
+    (TRANSIT) 	edge [bend left] 		node[align=center,swap]										{$e_{\mathrm{viol}}$} 										(TRANSITV)
+    (TRANSIT) 	edge [bend right] 		node[align=center]											{$e_{\mathrm{b\_deliver}}$} 									(DELIV)
+    (TRANSITV) 	edge [loop below] 		node[align=center]											{$e_{\mathrm{viol}}$}										()
+    (TRANSITV) 	edge [bend left] 		node[align=center]											{$e_{\mathrm{b\_deliver}}$}									(DELIVV)
+    (DELIV) 	edge [bend right] 		node[align=center,swap]										{$e_{\mathrm{b\_nofeed}}$ \\ $e_{\mathrm{b\_approve}}$}				(COMPLETED)
+    (DELIV) 	edge [bend right=20]	node[align=center,swap,near end,xshift=1mm]					{$e_{\mathrm{b\_reject}}$}									(RETURN)
+    (DELIVV) 	edge [bend left=30] 	node[align=center,near start,swap,xshift=3mm,yshift=6mm]						{$e_{\mathrm{b\_nofeed}}$ \\ $e_{\mathrm{b\_approve}}$}				(COMPLETED)
+    (DELIVV) 	edge [bend left=10] 	node[align=center,near end,swap,yshift=-4mm]				{$e_{\mathrm{b\_reject}}$}									(RETURNV)
+    (RETURN) 	edge [bend right=15]		node[align=center]										{$e_{\mathrm{viol}}$}										(RETURNV)
+    (RETURN) 	edge [bend left=20]		node[align=center,xshift=8mm]							{$e_{\mathrm{s\_deliver}}$}									(RETURNED)
+    (RETURNV) 	edge [bend left=40]		node[align=center]											{$e_{\mathrm{s\_deliver}}$}									(RETURNEDV)
+    (RETURNV) 	edge [loop left] 		node[align=center,xshift=10mm,yshift=6mm]					{$e_{\mathrm{viol}}$} 										()
+    (RETURNED) 	edge [bend left]		node[align=center,near end]									{$e_{\mathrm{s\_reject}}$}									(CLERK)
+    (RETURNED) 	edge					node[align=center,swap,near start]							{$e_{\mathrm{s\_nofeed}}$ \\ $e_{\mathrm{s\_approve}}$}				(INACTIVE)
+    (RETURNEDV) edge [bend left=10]		node[align=center,swap]										{$e_{\mathrm{s\_reject}}$}									(CLERKV)
+    (RETURNEDV) edge [bend right=10]	node[align=center,swap,xshift=2mm,yshift=-12mm]	{$e_{\mathrm{s\_nofeed}}$ \\ $e_{\mathrm{s\_approve}}$}	(INACTIVE)
+    (CLERKV) 	edge [bend left=10]		node[align=center,near start,anchor=north west,xshift=-1mm,yshift=-5mm]	{$e_{\mathrm{clerk}}$}							(INACTIVE)
+    (CLERK) 	edge [bend left]		node[align=center,near start]								{$e_{\mathrm{clerk}}$}										(INACTIVE);
+\end{tikzpicture}

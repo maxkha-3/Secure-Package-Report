@@ -1,0 +1,33 @@
+\subsection{Features of the centralized application} \label{section:futureworkapp}
+
+In order to deploy the system for public use in the future, the implementation of following selection of features should be considered. Various small front-end based tweaks and integration of less important functionality in order to improve usability of the system (e.g. messaging between users, more efficient and user-friendly web interface design, etc.), are not mentioned in this section.
+
+\paragraph{Encryption}
+As of now, the data is not encrypted and is stored in the database as plaintext. Data is transmitted to the backend via HTTP, thus making it possible to use packet sniffing tools, such as Wireshark to extract HTTP payload with little to no effort. Another problem is that any insider, who has access to the database (such as database administrator), may just use simple queries to browse the users' private information. This is a privacy concern.
+
+All of those problems can be addressed by implementing an efficient encryption solution. Functionality for generation of public key is already there, so, depending on a chosen approach, a private key should be generated and stored on the user's computer. It is important to consider, that there are several parties, who should be authorized to access the data at different times. For example, the clerk should only be able to browse agreement data if and only if the conflict request is initiated. Thus, the encryption should be multi-layered.
+
+Another important security aspect that needs to be implemented in order to prevent packet interception is the encryption of communication channels. This could be achieved by using Transport Layer Security (TLS) protocols \citep{ssl}. This would mainly improve application's protection against "man-in-the-middle attacks".
+
+\paragraph{Alternative payment solution}
+
+An alternative payment solution, that uses the same ERC20 token, as in the decentralized implementation of the application was proposed during the design phase in Section \ref{section:blockchainfeatures}. This feature would greatly improve usability of the system, however, it was left out due to shortage of time.
+
+\paragraph{Improvements to the conflict resolving module}
+
+There are two main improvements, which can be made to the conflict resolving module. One of them would be to integrate an automated rule-based conflict resolving system, which would reduce need for human clerk administrators. This could both save time, as well as money for the organization, that would maintain the service.
+
+Another improvement would be to implement deep-learning algorithms, that could assist, or remove clerks altogether. This functionality would be rather difficult to implement, as there are multiple factors, that has to be taken into consideration during the conflict resolving process. This can potentially be addressed in a separate thesis work.
+
+\pagebreak
+
+\subsection{Improvements to the analysis}
+
+Apart from the implementation-related features, there are some analysis-related elements, that would potentially have improved quality of the practical analysis in Section \ref{section:blockchaincomp}, which considered a comparison between the centralized and decentralized Secure Package implementations.
+
+\paragraph{Deployment on a real server} 
+In order to establish better comparison to the blockchain-based implementation from the performance point of view, the centralized application should be deployed on a real server. System could then be thoroughly tested in order to understand how it performs under increased traffic. The results of that test could later be used to compare systems to eachother from that point of view. Aspects, such as scalability and availability could also be measured by deploying the system on a server.
+
+\paragraph{Security comparison}
+In the previous section, it was mentioned that implementation of an encryption solution is necessary, in order to improve security aspect of the centralized system. Additionally, the implementation of encryption mechanism would provide better arguments and facts for the security comparison, as the systems could then have been practically tested from that point of view.
+

@@ -1,0 +1,34 @@
+\subsection{Purpose of this thesis} \label{section:purpose}
+This thesis summarizes a research, which has been performed to show the importance of evaluating the options, when dealing with a difficult choice of implementation model, especially, when one of the possible alternatives is to use blockchain. This project has two main goals, which are described in Sections \ref{section:centvsdecent} and \ref{section:hybridversion}. In order to accomplish them, a number of questions and implementation details are being touched upon in this study.
+
+\subsubsection{Theoretical analysis of approaches} \label{section:centvsdecent}
+Software development is a costly, highly time consuming and, when things do not work out as planned, very frustrating process. Thus, it is very important to be aware of the issues and constraints, in order to be able to face the challenges, which are associated with the implementation and maintenance of the system in question. This can be achieved by performing a theoretical analysis during the design phase, which has a potential to guide the developers to a correct path and avoid problems along the way.
+
+Thus, the first goal of this thesis work is to perform a detailed theoretical study, in order to find out if usage of blockchain technology as a foundation has a potential to provide a better solution, than the usage of a centralized approach with a central server architecture as its backend. Blockchain architecture, which is considered in the theoretical study and this thesis work in general is Ethereum (see Appendix \ref{section:ether} for details). 
+
+In order to demonstrate the importance of such a study, in context of this thesis work, it is performed on two different implementation approaches and architectures in Section \ref{section:featureanalysis}. Those approaches are: the centralized, with usage of a client-server architecture, and the decentralized, which runs on Ethereum blockchain. The analysis considers multiple points of view and scenarios, in order to see how efficiently the system would react to them in theory.
+
+\subsubsection{Influencing implementation of a centralized system} \label{section:hybridversion}
+When comparing the traditional centralized approach with a decentralized one, a detailed and careful analysis has a great potential to provide guidance in finding drawbacks and advantages from "both worlds", so to speak. As a result of that, the developers may gather crucial information on how to improve a given system by combining the technologies. This is the second goal of this study, namely, to use the results of theoretical analysis, which was proposed in the previous section, as a foundation for implementation of a centralized system, that, in some aspects, benefits from a selection of features and influences of a blockchain-based system. An additional goal is to find out if such implementation is generally better and more efficient than the equivalent traditional system with no influence of decentralized concepts. The system, which will be considered in this thesis work is Blocket Secure Package, which is described in greater detail in Section \ref{section:securepackage}.
+
+The implementation details of the centralized system are covered in Section \ref{section:design}. In order to evaluate its performance, compared to the blockchain-based implementation (implemented by Axel Vallin as part of his thesis work), the systems will be compared to eachother from different standpoints. The point of this comparison is to answer the following questions: 
+
+\begin{displayquote}
+\textit{"Is it possible to create a centralized system, that doesn't use a blockchain, but possesses its advantages without having its blockchain-specific drawbacks?"}.
+\end{displayquote} 
+
+\begin{displayquote}
+\textit{"Can blockchain-specific features improve a centralized system and address some of its issues without a need for drastic architecture changes?"}.
+\end{displayquote} 
+
+\subsubsection{Outline}
+To summarize the contents of Sections \ref{section:centvsdecent} and \ref{section:hybridversion}, the following list of goals, that this thesis work aims to accomplish, is compiled:
+
+\begin{itemize}
+\item Perform a theoretical analysis of general features between Ethereum-based and client-server systems.
+\item Use the analysis to influence the implementation process of the client-server system. Show how such an analysis might be useful during the design phase.
+\item Design an improved version of Blocket Secure Package.
+\item Compare the resulting client-server system to Ethereum-based application, which was developed by Axel Vallin.
+\item Draw a series of conclusions out of the theoretical comparison and the system analysis. Answer the questions, provided in Section \ref{section:hybridversion}.
+\end{itemize}
+

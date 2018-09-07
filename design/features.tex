@@ -1,0 +1,62 @@
+\subsection{Design phase} 
+
+The client-server application, which was developed during the course of this thesis work was designed with the original Blocket application in mind. It was built in order to provide roughly the same functionality as the original system, alongside some additional features, general functional improvements and influences from the blockchain environment, according to the theoretical analysis from Section \ref{section:featureanalysis}. It is important to note, that some of the features, which were proposed in this section, were left out for future work and briefly mentioned in Section \ref{section:futurework}, due to time constraints.
+
+\subsubsection{General features} \label{section:features}
+
+Features, that are listed in this section, were initially proposed for integration in the centralized Secure Package application during the design phase, in order to provide extended functionality, in comparison to the original service by Blocket. The list of features was inspired by the analysis of the original Blocket system, as well as regular meetings with Axel Vallin and our supervisor, Mario Toffia, throughout the course of this thesis work.
+
+\paragraph{Advertisement support}
+As the resulting centralized application is to provide functionality of an online merchandise trading platform, it is rather obvious, that there needs to be a support for advertisements. Functionality of posting of new advertisements should be provided in roughly the same manner, as in the original service by Blocket. Advertisement is to support multiple pictures, alongside with a short description. Sensor inclusion, which is mentioned later in this section, is to be initially configured by the seller, when creating the advertisement. Once posted, advertisement is to be made public for viewing, as in any other merchandise trading platform.
+
+\paragraph{Proposal and acceptance of terms}
+Integration of proposal and acceptance of terms, would provide functionality, similar to the bidding auctions. As the application is to be extended with sensor support, the resulting bidding mechanism would possess a higher degree of freedom, with the price not being the only decisive factor. Potential buyers are to be able to propose own terms for the advertisements. Terms should consist out of the logistics timeout deadline, proposed price, sensor inclusion and sensor threshold configuration. Seller sets the initial terms for an advertisement upon creation, which should be visible to the potential buyers and act as a reference of what the seller expects to get in return for the item and what sensors he/she would like to include.
+
+\paragraph{Sensor selection and threshold violation generation}
+As mentioned in Section \ref{section:improvementsfromoriginal}, sensor support was proposed in order to provide users with more detailed information during the logistics process. Sensors are to be attached to the parcel and regularly send data to the backend. Following sensors are to be included in the sensor selection (the list could further expand with additional sensor types in the future, which has to be kept in mind, during the implementation process of the sensor module):
+
+\begin{itemize}
+\item \textbf{Global position sensor (GPS)} - Can be used to track parcel's position in real-time, if so desired. GPS sensor may be viable for use in more valuable parcels.
+\item \textbf{Accelerometer} - Can be used to detect sudden drops in case of fragile parcels, as such drop would result in a spike of the accelerometer readouts.
+\item \textbf{Pressure sensor} - Can be used with parcels, which are either sensitive to sudden pressure changes, or need to be pressurized during the transport process.
+\item \textbf{Humidity sensor} - Can be used with parcels, which contain, for example, electronics, as they tend to be more sensitive to increased humidity levels.
+\item \textbf{Temperature sensor} - Can be used along with frozen goods, in order to monitor, whether the parcel was thawed and, therefore, damaged during the transport process.
+\end{itemize}
+
+According to the list above, different sensors have different use cases. Different sensor combinations could be used for specific parcels, according to their properties and users' needs. This provides the users with more options during the logistics process, which theoretically increases the usability aspect of the service.
+
+As mentioned earlier in this section, sensor inclusion details are to be defined during the terms proposal process by the potential buyers. Each sensor's threshold configuration should also be defined during that process, as these thresholds are later meant to be used to generate violation events, which would notify the parties, involved in the trade, that the item might be damaged upon arrival. For example, if an accelerometer sensor is configured with some threshold, denoted as $V$, it would generate such violation event if the accelerometer would output a value higher than the configured threshold $V$. Such values may, for example, be generated in case of the parcel being dropped by the logistics company employee during the unloading process from the delivery truck. Inclusion of this functionality could potentially provide more information to clerk administrators for conflict resolving process.
+
+\paragraph{Logistics process monitoring}
+Integration of logistics process monitoring, as an additional module, would provide a functionality, in which both buyer and seller would be able to see general information about the transfer process of the item in real-time, as well as sensor readouts (e.g. current GPS position, accelerometer data, generated violation events, etc.). Sensor data visualization in form of two-dimensional charts should be integrated as part of this module, in order to improve the user experience and overall usability.
+
+\paragraph{Clerk conflict resolving}
+Clerk functionality, which should be responsible for conflict resolving. Clerks can be seen as administrators, that represent a legal authority, which are to be used for conflict resolving purposes in the context of the system. A conflict is to be automatically initiated in case of seller not accepting the condition of potential return. Clerk resolving module should also be extended with a dashboard functionality, in which clerk administrators would be able to browse through conflict requests and see detailed information about each request (e.g. general information, sensor outputs, logistics information etc.).
+
+Clerk resolving principal will potentially introduce some degree of third party presence, however, that functionality was considered necessary, as conflicts will occasionally occur and they need to be resolved in some way. Another approach would be to introduce a voting system, in which user accounts may be granted clerk permission if they possess high enough percentage of positive user feedback, however, that approach was not used.
+
+\paragraph{Increased privacy}
+When the agreement between buyer and seller is reached in the original Blocket application, the buyer is required to provide own personal information (e.g. name, address, phone number etc.) to the seller, as the seller needs to compile the transport document and fill in the logistics form, which contains origin and destination for shipping of the parcel. This makes the whole semantics of that process a lot more transparent and less private than necessary.
+
+In order to establish increased privacy of that process, users' real names and residential addresses are to be hidden from eachother. However, users should still need to configure the accounts with personal information, but it should only be visible to the logistics company and clerk administrator in case of a conflict being initiated. Once the terms for an item are accepted, the only information, which should be required for the logistics process from the seller's side is the unique item identifier. By using that identifier, the logistics company is to get access to the item's logistics-related terms, such as sensor inclusion, sensor configuration, origin and destination. Therefore, this functionality, would make the logistics company the only party, which would get access to the users' private information. This would be an improvement, compared to the original system.
+
+\subsubsection{Blockchain-specific features} \label{section:blockchainfeatures}
+
+The result of theoretical analysis, provided in Section \ref{section:featureanalysis}, was rather useful, as it was used to influence implementation strategy of the client-server system. According to the conclusion, provided in \ref{section:analysisconclusion}, the following list of blockchain-specific features was chosen to be considered during the implementation process.
+
+\paragraph{Private key and account address generation}
+Account security is very important in any system for obvious reasons. The approach of random seed generation, which is later used to compute private and public keys, using hash functions is very common in blockchain-based systems. By using that approach, private keys never leave the user's computer and can be recovered by providing that random seed. This approach implies that it is impossible to get hold of the account's private key, unless the intruder gains access to the computer, on which the private key is stored.
+
+\paragraph{Partial transparency and explorer module}
+Many centralized systems lack data integrity and trustworthiness aspects. In an attempt to improve the system, according to those quality attributes, the application data flow and database information were designed to be partially transparent. Sensitive information, such as residential addresses, full names of the users and sensor outputs were intended to be hidden from the public and available only to the parties, which were involved in the trade of merchandise.
+
+Explorer module, which provides roughly the same functionality, as block explorer applications in Ethereum, might potentially improve usability of the system. By accessing the explorer module, users should be able to search for user accounts, advertisements, events, etc.
+
+\paragraph{160-bit address system}
+Ethereum uses 160-bit address system for the user accounts and smart contracts. Integration of similar functionality in the centralized Secure Package application could have a potential to generalize system's abstract data structures, which are described in \ref{section:datastructures}, and simplify implementation of the explorer functionality, which was proposed in last paragraph.
+
+\paragraph{Alternative payment system}
+Integration of an alternative ERC20 token payment system would provide users with more payment alternatives and, therefore, increase system's usability aspect. The payment system in question was implemented by Axel Vallin, as part of the decentralized version of the Secure Package system. Integration of additional payment solution Usage of ERC20 token payment system introduces cryptocurrency-related drawbacks and advantages from economic and trustworthiness points of view. However, by providing a selection of different payment methods (both related to fiat money and cryptocurrencies), users are introduced with the ability to evaluate good and bad sides of each payment solution and choose whichever the one suits the user best.
+
+\paragraph{Increased clerk trust}
+In order to increase trust aspect, regarding third party, the conflict resolving would not be done by the organization, that runs the service, as this would introduce the risk of clerk being biased toward the organization, or the logistics company. Therefore, conflict resolving process would be handled by a trusted legal authority.

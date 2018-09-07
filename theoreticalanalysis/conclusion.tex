@@ -1,0 +1,76 @@
+\subsection{Summary of the analysis} \label{section:analysisconclusion}
+Considering different points of view, that were brought up in Section \ref{section:featureanalysis}, a series of conclusions can be drawn, in order to find out what blockchain-specific features should be included, or kept in mind, during the implementation process of the centralized application, which is described in Section \ref{section:design}. 
+
+Table \ref{tab:analysisoutline} summarizes the analysis. More detailed summaries, regarding individual quality attributes and points of view can be found in following paragraphs.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{| c | c | c |}
+\hline
+\textbf{Aspect/quality attribute} & \textbf{Ethereum-based} & \textbf{Client-server} \\
+\hline
+Trustworthiness & High & Low \\
+Third party involvement & No & Yes \\
+Data integrity & Very high & Medium to low \\
+Attack protection & Depends & Depends \\
+Performance & Low & High \\
+Cost & Very high & Low \\
+Scalability & Moderate & Good \\
+Power consumption & Extreme & Low (in comparison) \\
+Reusability & High & Depends \\
+Modifiability & High & Depends \\
+\hline
+\end{tabular}
+\caption{Summary of the theoretical analysis, according to different points of view and quality attributes.}
+\label{tab:analysisoutline}
+\end{table}
+
+\paragraph{Data persistence and trustworthiness}
+Usage of blockchain provides a large degree of data integrity and trustworthiness (assuming that the network possesses sufficient hashrate to withstand 51\% attacks), as cryptographic bonds between the blocks are very tough to tamper with in order to manipulate blockchain's contents. That is probably one of the main reasons why cryptocurrencies became such a big thing in a course of past couple of years.
+
+High degree of trust, which many public blockchain-based systems tend to possess, can be explained by their transparency. Every state change is permanently stored and is accessible by anyone for viewing. In many cryptocurrency-based blockchains that transparency results in tokens being traceable and account balances being public. However, that transparency is not always desirable, as this makes storage of sensitive private information publicly viewable in case of it being unencrypted. Blockchain-based systems also possess high degree of anonymity, which makes the total transparency being less of an issue.
+
+The trustworthiness of data in centralized systems is arguable due to various reasons. For example, if a system which uses a MySQL database for storage of data is considered, there is often nothing that prevents a system administrator from changing contents of some database fields without being detected. Thats is not possible in a Ethereum.
+
+\paragraph{Third party}
+One of the most well recognized benefits of blockchain is the removal of third party (mostly in open-source public blockchains). This greatly reduces the risk of getting scammed and having private information stolen by corporation, that runs a particular service. By having no third party involvement, blockchain networks tend to become truly community-driven. This is beneficial, because in many cases of systems, that are controlled by a central authority, users are being forced to follow guidelines, that benefit the central authority, not the users themselves.
+
+\paragraph{Performance and scalability}
+There are different aspects, which can be taken into consideration, when measuring performance of two approaches. One of those aspects is the throughput. In case of centralized systems, this parameter is heavily dependent on the server hardware, which is being used to handle data. For Ethereum, this parameter is indirectly dependent on the network's hashrate and total congestion. This makes Ethereum moderately scalable, as it can adapt to increased transaction density by increasing the block gas limit (assuming that the hashrate is sufficient enough to support that increase). However, that increase is not that sufficient, due to extremely low transaction capacity of Ethereum. Centralized systems can cope with the increased demand by adding more server hardware to the data centers.
+
+When taking storage into consideration, each and every smart contract on the Ethereum network possesses a huge amount of virtual storage, however, that storage is, as it turns out, really expensive to use and writing to it can take unpredictable amount of time, as it is strongly dependent on current condition of the network.
+
+\paragraph{Security}
+This a broad subject, as there are several layers of security, that need to be implemented in order to build a truly secure system, disregarding of what approach is taken. From the data integrity point of view, the data is strongly protected by cryptography in blockchain based systems, which could not be said about most client-server systems. 
+
+When talking about Ethereum, a DDoS attack is nearly impossible to pull off, as it would be very expensive and impractical to do. In centralized systems, modern DDoS prevention tools have become more and more advanced, thus providing really strong DDoS protection by combining complicated request filtering algorithms with data migration approaches. 
+
+There is a need for implementation of secure communication channels, disregarding the approach, as there is always a risk of becoming a victim of "man in the middle" attacks without proper protection of communication channels.
+
+One of the biggest weaknesses of any blockchain is that they tend to be quite vulnerable to 51\% attacks, depending on some factors. There have been many cases of successful 51\% attacks, with most of those attacks being performed on smaller blockchains with less significant hashrate. Thus, a blockchain network's security is strongly dependent on its total hashrate, as it serves as an indirect protection against 51\% attacks (probability of performing such attack proportionally decreases in a linear matter with increased hashrate).
+
+In blockchain based systems, usage of symmetric cryptography is a bad idea, as this would make the secret key visible to everyone. That is the reason why public key cryptography is chosen in blockchains, with the ECDSA elliptic curve cryptography mechanisms being most popular due to their rather short key sizes. However, it is very important to generate and store private keys locally off the chain, due to blockchains typically being transparent, and have a sufficient backup generation mechanism in case of key becoming lost. Wallet applications in cryptocurrency-based systems tend to use a random seed for private key generation, which can also be used for key recovery in case of a loss \citep{walletseed}.
+
+Cryptography in client-server based systems is present in many different ways, depending on the context and the requirements of a system. Therefore, it is impossible to find an optimal cryptographic algorithm in context of client-server applications in general, as the answer strongly depends on the system and it's specific features and demands. However, no matter what encryption algorithm is chosen, it is important to properly generate keys, as well as choose a key size, which is considered being secure enough to withstand known potential attack approaches.
+
+It is important to mention, that even though Ethereum is an extremely secure network, it is still possible to implement bad smart contracts, that may potentially introduce security flaws in the distributed applications. Therefore, the developers need to dedicate some time to throughly test the smart contract code for bugs and potential exploits. Tools, such as Oyente, might be of great help for that purpose.
+
+\paragraph{Constraints}
+Many constraints in centralized systems are hardware- and infrastructure-based. In blockchain, specifically in Ethereum, many constraints are related on operations being very expensive to perform from computational standpoint, as more advanced computations and increased transaction frequency require a lot more gas. Thus, the developers need to spend a lot of effort to optimize the smart contract code, in order for it to consume as little gas as possible. Solidity itself puts some constraints on the application development, as it lacks some of the features, which are present in other more developed programming languages.
+
+\paragraph{Reusability and modifiability}
+Depending on what design pattern was chosen during the implementation process of a given client-server system, its reusability and modifiability aspects may vary. One of the best design patterns to choose, in order to establish an increase of those aspects in a client-server system, is Facade API pattern. Implementation of an API would significantly reduce the hassle of connecting multiple platforms to a single backend. In case of distributed blockchain applications, it is very easy to connect multiple platforms to a single smart contract backend, as there is no maximum throughput limit of a single smart contract.
+
+\paragraph{Economics and infrastructure}
+From the economic standpoint, the removal of third party, which was mentioned earlier, opens up a possibility for cheaper access to services and applications, as there would be no enterprise behind the service, which will try to run it more profitably by charging customers with more money. However, usage of DApps comes at a cost each time the user chooses to interact with its underlying smart contracts and changes its state. That is not a problem for some applications, however, the scale of the issue becomes quite large, when applications, that require a lot of interaction with the backend and handle great quantities of data, are taken into consideration. It is also important to mention that it is ludicrously expensive and ridiculously slow to store data in large quantities, using the Ethereum blockchain, as was shown in Equation (\ref{eq:newstorecost}), which makes it completely unrealistic to store large media files and datasets on the chain.
+
+Another potential issue, regarding economic aspect of blockchain based systems is the price volatility of cryptocurrencies and tokens. This might become less of an issue in the future, however, at the time of writing, it is very common for the whole cryptocurrency market to wildly shift tens of percents a day. This issue can be addressed by using, as they are referred to sometimes "stable coins", however usage of such currencies would introduce a third party, which sort of ruins the whole point of using a cryptocurrency (in that case one might just as well use fiat currency instead). This issue is more common in currencies with low liquidity, as they can easily be manipulated by wealthy individuals and institutions to gain economic advantage and dramatically increase volatility.
+
+In the discussion about scalability aspect, a conclusion was drawn that it would require additional hardware to be able to deal with potential increases in traffic. That hardware comes at a cost and server equipment tends to be rather pricey. That is not the case, when dealing with Ethereum-based applications, as there is no direct need for additional infrastructure to support increased load.
+
+Considering that nearly all interactions with the smart contracts consumes gas, it is very costly to use an Ethereum blockchain as a backend. Applications that would require to process large amounts of data and handle alot of requests would simply be to expensive to deploy and use.
+
+\paragraph{Environmental impact}
+Consensus mechanism of proof-of-work cryptocurrencies is powered by, so called, miners. Mining involves a complicated process of computing hashes, in order to validate new blocks, and it is an extremely power hungry process. Ethereum mining alone consumes as much energy as a small European country. In comparison to such large service as Facebook, which uses a client-server architecture, Ethereum mining draws roughly 6 times more electricity, despite the fact that Ethereum handles at most 21 transactions per second, in comparison to Facebook, which is being used by 1.2 billion users on monthly basis \citep{faceusers}. 
+
+This issue can potentially be addressed to some degree by moving to a proof-of-stake consensus mechanism, which is on the way of becoming a reality for Ethereum with its upcoming Casper release.

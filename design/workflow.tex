@@ -1,0 +1,103 @@
+\subsection{Workflow}
+
+\subsubsection{Initial planning}
+Initially, the first couple of weeks of this study were spent on figuring out the potential flaws with the blockchain-based application, which was developed as part of another thesis work by Axel Vallin, in order to get an understanding about the relevance of this project. Some time was dedicated onto setting up the integrated development environment and backend architecture (server and the database environment).
+
+\subsubsection{Methodology of theoretical analysis}
+Before any implementation was to take place, a theoretical study was conducted in order to find out what features the centralized application should possess. The outcomes of that study are were discussed in Section \ref{section:theoanalysis}. The study itself involved reading a significant amount of material on the Internet, in order to extract relevant facts about different approaches, as well as discussing various aspects and typical features, related to different architectures with Axel and our supervisor Mario Toffia. Regular meetings were held among us three to evaluate current progress and discuss problems, that were stumbled upon along the way. 
+
+By far the largest problem, that was encountered during the analysis was to find trustworthy sources of information. The reason for that is that many articles, which are related to various blockchain-related topics, were written by unfamiliar blockchain bloggers and, in many cases, provided little to no arguments behind various statements, that the author mentioned.
+
+Another problem is that it is really tough to describe a "typical" centralized system and its "typical" properties. Centralized systems are vastly popular and are extremely different from one another, which makes it very difficult to provide valid statements, during the discussion about general relevance of approaches from different perspectives.
+
+\subsubsection{Application development} \label{section:development}
+Once the analysis was completed, the desired features were defined (described in Sections \ref{section:features} and \ref{section:blockchainfeatures}). The application was developed according to those features in three development sprints. The sprints lasted about two weeks each, with the second sprint being the longest one at about three weeks. The approach of breaking down larger tasks into smaller ones, using agile development methodology, was used in order to make the development process more organized.
+
+\paragraph{Sprint 1}
+First sprint was initiated by getting familiar with the environments and reading documentation and tips about programming languages that were to be used for the implementation of the application. My previous experience with AngularJS made transition to Angular 5 quite confusing from the start, as they are similar in some aspects, but completely different in others. However, after a few days of coding, I became very comfortable with it.
+
+One of main focuses of this sprint was to implement the necessary functionality, such as account management and advertisement posting. Following components and features were implemented during sprint one:
+
+\begin{itemize}
+\item \textbf{Semantics of the system} - Definition of how the application is supposed to behave and respond to occurrence of different events. State machine, from Section \ref{section:statesofcontract} was compiled for that particular reason.
+
+\item \textbf{Account generation} - Ability of using random seed and SHA-256 hash function to generate public key and address (private key functionality was left out, due to time shortage, which is discussed in Section \ref{section:futureworkapp}).
+
+\item \textbf{Logging in} - Ability to log in with a password and account address, implementation of \texttt{LoginComponent}.
+
+\item \textbf{Connection to database} - Initial functionality of database connection was tested through logging in functionality, which is described above.
+
+\item \textbf{First revision of API} - Backend API was designed and implemented, as well as the \texttt{ApiService} on the frontend-side.
+
+\item \textbf{Addition of items and item display} - Ability of addition of new items, or advertisements, as they also can be referred to (in \texttt{NewItemComponent}) and ability to browse items (in \texttt{ItemBrowserComponent}).
+
+\item \textbf{Item manager} - Ability of browsing own advertisements and extension possibility for browsing own purchases and proposals, which were implemented in the second sprint. This functionality was implemented in \texttt{ItemManagerComponent}.
+\end{itemize}
+
+\paragraph{Sprint 2}
+Main focus of sprint two was to implement functionality, that enabled establishment of an agreement. Thus, functionalities, like proposal of terms, browsing of terms by the seller and acceptance of them needed to be implemented. Additional goal of implementing the simulation application in collaboration with Axel Vallin was added after implementation of all functionality, which was necessary to enable establishment of agreements. 
+
+To sum it all up, following components and features were implemented during the second development sprint:
+
+\begin{itemize}
+\item \textbf{Proposal of initial terms} - Ability of proposing initial terms in \texttt{NewItemComponent}. Inclusion of sensor selection and configuration into terms structure.
+
+\item \textbf{Proposal of terms by buyers and item page} - Introduction of an item page in \texttt{ItemComponent}, where more detailed information about the item could be browsed, as well as item proposals could be created by the potential buyers.
+
+\item \textbf{Second revision of item manager} - Addition of functionality of browsing own proposals and bought items into \texttt{ItemManagerComponent}.
+
+\item \textbf{Logistics process simulatior} - Package simulator with item return support. The simulator was described in detail in Section \ref{section:simulation}.
+
+\item \textbf{Agreement information display} - Ability to track packages, see agreement information and read sensor outputs during the transport process was integrated into \texttt{AgreementComponent}.
+
+\item \textbf{Second revision of API} - Implementation of API support for additional features in sprint two. Restructuring of \texttt{ApiService}.
+\end{itemize}
+
+\paragraph{Sprint 3}
+
+During the third and final sprint, the focus was moved to clerk resolving and explorer functionality. Once those two modules were completed, the remaining time was spent on finishing touches, such as improvements of the visual aspects, minor bug fixes, as well as reorganization and documentation of code.
+
+\begin{itemize}
+
+\item \textbf{Visual improvements of the web GUI} - Reimplementation of CSS files to make the web interface appeal better to the users.
+
+\item \textbf{Explorer module} - Ability to explore addresses in detail and integration of that functionality into the application, implemented in \texttt{ExplorerComponent}.
+
+\item \textbf{Clerk resolving} - Support for clerk accounts and clerk resolving functionality, which was integrated into \texttt{ClerkComponent}.
+
+\item \textbf{Third revision of API} - Reorganization and redesign of server API code, which made it appear in the same manner as was described in Figure \ref{fig:dataflow}.
+
+\item \textbf{Documentation and cleanup of code} - Restructuring of client- and server-side code. Removal of obsolete functions and documentation of code according to TSdoc and PHPdoc.
+
+\item \textbf{Testing of scenarios and bug fixing} - Involved testing of different user scenarios, as well as some minor bug fixes, which were left out during previous sprints.
+\end{itemize}
+
+\subsubsection{Testing}
+
+The main methodology behind testing was to use the logistics simulator, which was described in Section \ref{section:simulation}, and a variety of interactions with the application itself, in order to find out if it behaved correctly under different circumstances. There was no automated testing module implemented, which resulted in all testing being done manually. As was mentioned in Section \ref{section:datastructures}, the event data structure was used to define the event occurrences in agreements (e.g. receival of the parcel by the buyer, acceptance of terms by the seller, accelerometer threshold violation, etc.). Those events were used to alter states of the agreements. The system was expected to react differently, according to the occurrence of different events. In order to compare actual reaction of the system to the expected reaction, DFA $M$, which was derived in Section \ref{section:statesofcontract} and visualized in Figure \ref{fig:dfa}, was used as the main reference point for comparison.
+
+
+\subsubsection{Tools} \label{section:tools}
+
+Various tools were used during the development process of the application. Some of those tools were familiar, as they were used by me in previous projects, while others were not. Thus, some time had to be dedicated into getting to know those tools better, mainly by reading documentation and going through tutorials.
+
+\paragraph{Angular}
+Angular is a front-end framework for creating web application in TypeScript and HTML. One of Angular's biggest advantages is its practical implementation of the model-view-controller (MVC) pattern, which allows for implementation of responsive web interfaces. Angular provides quite similar functionality to jQuery, however its code is significantly more readable than jQuery's and it follows different internal data semantics, which allows for more clear separation of code, according to its intended functionality.
+
+\paragraph{IntelliJ}
+IntelliJ is an Integrated Development Environment (IDE), which was used in this project. It supports majority of programming languages and a number of plugins, which were rather useful during the development process. The deployment of the frontend and simulation applications was done, using instances of Webpack Dev Server (WDS), which is integrated into the IDE as a plugin. Another useful plugin was the database management interface, which is able to connect to a database and has functionality of performing SQL queries on it.
+
+\paragraph{XAMPP}
+XAMPP was used for testing and deployment purposes of the backend and the API. It is a free and open source cross-platform web server solution stack package, consisting mainly of the Apache HTTP Server, MariaDB database, and interpreters for scripts written in the PHP and Perl programming languages. It is a simple, lightweight Apache distribution that makes it extremely easy for developers to create a local web server for testing and deployment purposes. One of the main reasons of choosing XAMPP was that since most actual web server deployments use the same components as XAMPP, it makes transitioning from a local test server to a live server extremely easy.
+
+\paragraph{Docker Toolbox}
+Docker is a computer program that performs operating-system-level virtualization, also known as containerization. Docker Toolbox (a version of Docker that does not use Hyper-V for virtualization, among other things) was used to host a container with an instance of a MySQL database. It was chosen due to its extremely trouble-free and practical deployment. 
+
+\paragraph{MySQL Workbench}
+MySQL Workbench is a visual database design tool that integrates SQL development, administration, database design, creation and maintenance into a single integrated development environment for the MySQL database system. It was very useful throughout the development for testing and database management tasks. Database schema, which was displayed in Figure \ref{fig:databaseschema} was created, using the reverse engineering tool, which was integrated into MySQL Workbench.
+
+\paragraph{Microsoft VSTS}
+Microsoft Visual Studio Team Services is an online tool, that has many use cases, one of which is management of agile development processes. In context of this project, it was used to manage stories, tasks, bugs and notes. 
+
+\paragraph{GitHub}
+GitHub is a web-based hosting service for version control, that uses git as foundation. It was used throughout the development process for version control and code management purposes. The project was split into three different repositories to separate the modules (backend API \citep{gitapi}, simulator \citep{gitsim} and centralized application \citep{gitapp}).  

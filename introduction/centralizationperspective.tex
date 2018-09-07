@@ -1,0 +1,64 @@
+\subsection{Concept of decentralization}
+The concept of decentralization can be interpreted in different ways, depending on the context and perspective. In computational theory, decentralization means that the computational resources are distributed across several nodes of the network, instead of being centered at a single "central" node. Even though this thesis work is related to computer science, the concept of decentralization needs to be looked upon from other perspectives, that are not directly related to computational theory. 
+
+\begin{displayquote}
+\textit{"Decentralization is the process of distributing or dispersing functions, powers, people or things away from a central location or authority".}
+\end{displayquote}
+
+The above general definition of decentralization was fetched from a vocabulary and it also is of significant importance for the purpose of understanding what a decentralized system means in terms of this thesis work \citep{decentralizationdefinition}. 
+
+\subsubsection{Blockchain-based systems}
+A typical blockchain can be described as a \emph{\gls{peer-to-peer}} network with a \emph{\gls{distributed general ledger}}, that maintains the state of the network. In other words, each node in the network has information about its current state. Once the state changes, each and every node is notified and updates its copy of the general ledger accordingly. The overall state of the network is maintained by the consensus/agreement amongst the nodes. Usage of this approach prevents unauthorized changes to the general ledger.
+
+This can be illustrated by considering a simplified example. Let $N = \{A, B, C, D, E\}$ be a set of nodes, that participate in the network. Suppose that the network represents a token payment system, which maintains the token balance and has support for transfer of tokens between the nodes. In order to transfer tokens, the nodes are required to possess sufficient amount of tokens in the balance (negative balances are not allowed). 
+
+Let's say, that at a given state $S_0$, each of the nodes in the network possesses 10 tokens. Node $A$ transfers 5 tokens to node $D$, which results in a change of token balance of both nodes $A$ and $D$. This also implies that the state of the network changes to $S_1$, in which nodes $B$, $C$ and $E$ are still left with 10 tokens each, node $D$ has 15 tokens and node $A$ has 5. Each of the nodes are notified about this change and, by comparing their records, can achieve a general consensus about the state of the network. In other words, the achievement of consensus acts as a verification mechanism of the network.
+
+Now, lets assume, that node $A$ attempts a transaction of 10 tokens to node $C$. This would result in change of the state from $S_1$ to $S_2$, in which nodes $B$ and $E$ have 10 tokens, nodes $C$ and $D$ have 15 and node $A$ ends up with a negative balance of -5 tokens. This is not allowed by the network and the transaction, as well as the state gets invalidated. Node $A$ could attempt a change of its internal balance to 10 tokens and perform this transfer again. This transaction would also be invalidated, as the other four nodes' ledgers (shown in Table \ref{tab:ledgercopy}) would show that $A$ had a balance of 5 tokens after the latest valid state ($S_1$), which would prove that node $A$'s balance was not sufficient enough prior to the transaction taking place. 
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+\multirow{2}{*}{\textbf{State}} & \multicolumn{5}{c|}{\textbf{Token balance}} \\ \cline{2-6} 
+                                & \textbf{A}       & \textbf{B}      & \textbf{C}      & \textbf{D}      & \textbf{E}      \\ \hline
+$S_0$                           & 10      & 10     & 10     & 10     & 10     \\ \hline
+$S_1$                           & 5       & 10     & 10     & 15     & 10     \\ \hline
+\st{$S_2$}                      & \st{-5} & \st{10}& \st{15}& \st{15}& \st{10} \\ \hline
+\end{tabular}
+ \caption {Distributed ledger example. A copy of this ledger is distributed to all nodes, that participate in the network. State $S_2$ is invalidated.}
+ \label{tab:ledgercopy}
+\end{table}
+
+This whole idea of distributing the state of the network to the nodes is different from a traditional database, where the state is maintained by a centralized ledger. Thus, from technical perspective, the data handling model in blockchain environment is decentralized.
+
+\subsubsection{Ownership and privilege of nodes} \label{section:ownershipandpriveledge}
+Even though a blockchain architecture is decentralized from data handling perspective, there is another aspect, that needs to be considered. By recalling the example in previous section, we can state that each and every node in the network possesses equal privileges: every node has equal rights in maintaining consensus of the network and every node is allowed to send and receive tokens. An important fact to mention is that nothing prevents a new node, denoted as $G$, from joining the network. That new node $G$ would have equal rights and privileges as the rest of the nodes. The blockchain network, that is powering such system, is typically referred to as a public decentralized blockchain.
+
+However, not all blockchain networks work that way. There are three main types of blockchain networks from ownership and node privilege perspective. They are mainly differentiated on how different nodes are categorized and what party (or parties) maintain and execute the consensus protocol of the network. Another way of saying that is that, from that point of view, the degree of decentralization in a given blockchain-based network is strongly dependent on the degree of presence of a central authority, that controls and maintains that network.
+
+\paragraph{Public decentralized blockchains} \label{section:publicdecentralized}
+Most popular blockchains are publicly available with no restrictions on who can participate in the network and who can contribute resources to the verification process. These networks are typically community driven and have an \emph{\gls{open-source}} codebase, without any backing by an enterprise organization. In such networks, each node possesses equal functionality and rights (like in the example from previous section).
+
+These blockchains are called \emph{\glspl{public blockchain}}. Cryptocurrencies, like Bitcoin and Ethereum, and file storage services, like Sia \citep{sia} and StorJ \citep{storj}, among others, fall into that category. 
+
+\paragraph{Semi-decentralized public blockchains}
+Some public blockchains, like Ripple \citep{ripple} are running their consensus mechanism on a selection of trusted secure validator nodes. In case of Ripple, these validator nodes are owned by large companies and organizations, such as Microsoft, MIT (Massachusetts Institute of Technology), CGI and such \citep{ripplesecurenodes}. This means that not all the nodes are participating in the verification process and that not all the nodes are possessing copies of the distributed ledger. Thus, networks like Ripple, are running on \emph{\glspl{semi-decentralized public blockchain}}, where the nodes are typically divided into two main groups: user nodes, which are able to send and receive transactions, and validator nodes, which are verifying the transactions and maintaining the network.
+
+\paragraph{Centralized private blockchains}
+Even though, the blockchains are technically decentralized in terms of data handling, they can be used as foundation of centralized systems. These blockchains are typically called \emph{\glspl{private blockchain}}. The biggest factor that differentiates public blockchains from private ones is the pool of nodes that can participate in the network, and make administrative changes to the network. The codebase is typically not available for public viewing and is fully administrated by the organization that owns the network. 
+
+For example, Bitcoin, which is the largest public blockchain in the world has no barrier to entry when it comes to accessing the ledger and verifying the transactions, as was described earlier. By contrast, IBM’s HyperLedger \citep{hyperledger} is more customizable in the sense that the organization (in this case, IBM) that is deploying the blockchain has a say in every aspect of blockchain participation. Private blockchains are typically more restrictive in who they allow making changes to the ledger as they use the blockchain for the internal records.
+
+\subsubsection{Client-server applications} \label{section:clientserver}
+Client server applications are built around a concept of having a number of dedicated servers, that are used to process and store the application data. Those servers are typically owned and maintained by a company, which runs that particular application. That company would then act as a central authority, thus making the system centralized from the ownership and \emph{\gls{third party}} presence perspective in roughly the same manner, as it is in private blockchains. Those applications are typically more restricted, as users have less influence over the application's functionality and specific regulations.
+
+From the data handling perspective, client-server applications may differ from eachother, depending on what specific server architecture is used. Some server architectures consist of several servers, which are often located in completely different geographic locations, while some other applications use an approach of running all server hardware in a single data center. The drawbacks and advantages with each of those approaches are not relevant in the context of this thesis work and will therefore not be discussed. However, it is important to mention that, compared to a single data center model, the distributed server architecture introduces a degree of decentralization (from the data handling perspective). 
+
+\subsubsection{Decentralization and centralization in this study}
+In this study, the concept of decentralization and term \emph{decentralized system} are typically referred to the idea of a system, that uses a public blockchain with no participation restrictions, open-source codebase and no central organization being in the possession of rights to the network (close to what was being described in \ref{section:publicdecentralized}). Term \emph{decentralized approach} is often used and means the steps, mindset and implementation strategy, in order to develop such a decentralized system.
+
+The \emph{traditional centralized system} in the context of this project means a system that uses a \emph{\gls{client-server}} architecture, has an organization that runs the server infrastructure and maintains the codebase. An important note is that the server architecture might be distributed and therefore decentralized from data handling perspective (as described in \ref{section:clientserver}). The term \emph{traditional approach} is used to describe the steps and implementation details, regarding development of such centralized system. 
+
+\subsubsection{References to cryptocurrencies}
+The most widely-known applications of blockchain technologies are cryptocurrencies. At the time of writing, there are over 1500 different cryptocurrencies, that are registered on websites, known as cryptocurrency exchanges \citep{coinmarketcap}. The concepts, architecture details and mechanisms behind blockchain-based currencies are relatively easy to understand and explain. There is a lot of documentation and examples, related to cryptocurrencies, out on the Internet, thus making this field of blockchain-related systems a good reference for discussion in this study. 
